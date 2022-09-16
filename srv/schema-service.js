@@ -1,4 +1,5 @@
 const cds = require('@sap/cds')
+const { SavedBusinessPartner } = cds.entities;
 
 module.exports = cds.service.impl(async function() {
 
@@ -8,24 +9,26 @@ module.exports = cds.service.impl(async function() {
     const topic = 'demo/auxiliary'
 
     messaging.on(topic, async (msg) => {
-        // const messagePayload = JSON.stringify(msg.data)
-        // console.log('===> Received message : ' + messagePayload)
         console.log("===> Received message : ", msg.data);
         const element = await getOneBusinessPartner(msg.data);
-        // console.log("element", element);
-    });
-    
-    this.on('READ', 'BusinessPartners', async req => {
-        return await bupa.send({
-            query: req.query,
-            headers: {
-                'APIKey': cAPIKey
-            }
-        })
+
+        const existSavedBusinessPartner = await SELECT
+            .one(SavedBusinessPartner)
+            .where({ BusinessPartner : msg.data });
+
+        if (existSavedBusinessPartner) {
+            console.log("Ya existe el ID recibido:", msg.data);
+        }
+        else {
+            await INSERT
+                .into(SavedBusinessPartner)
+                .entries(element);
+            console.log("Se agrego a la db");
+        }
     });
 
     this.on('ApiGet', async (req) => { // /receiver/ApiGet(id='1710')
-        console.log("ApiGet");
+        console.log("===> ApiGet");
         return await getOneBusinessPartner(req.data.id);
     });
 
@@ -45,4 +48,13 @@ module.exports = cds.service.impl(async function() {
         console.log("--->returner", returner);
         return returner;
     }
+
+    this.on('READ', 'BusinessPartners', async req => {
+        return await bupa.send({
+            query: req.query,
+            headers: {
+                'APIKey': cAPIKey
+            }
+        })
+    });
 });

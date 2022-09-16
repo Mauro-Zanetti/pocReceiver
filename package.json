@@ -51,10 +51,8 @@
       "db": {
         "kind": "sql"
       },
-      "[production]": {
-        "messaging": {
-            "kind": "enterprise-messaging-shared"
-          }
+      "messaging": {
+        "kind": "enterprise-messaging-shared"
       },
       "API_BUSINESS_PARTNER": {
         "kind": "odata-v2",
