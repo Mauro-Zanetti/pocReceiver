@@ -23,6 +23,9 @@
   "scripts": {
     "start": "cds run"
   },
+  "engines": {
+    "node": "^16.15"
+  },
   "eslintConfig": {
     "extends": "eslint:recommended",
     "env": {

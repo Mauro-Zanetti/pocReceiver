@@ -27,6 +27,7 @@ modules:
       - name: pocReceiver-db
       - name: poc_mesh
       - name: pocReceiver-auth
+      - name: pocReceiver-logs
 
   - name: pocReceiver-db-deployer
     type: hdb
@@ -35,6 +36,7 @@ modules:
       buildpack: nodejs_buildpack
     requires:
       - name: pocReceiver-db
+      - name: pocReceiver-logs
 
   - name: pocReceiver
     type: approuter.nodejs
@@ -64,6 +66,13 @@ resources:
     parameters:
       service: enterprise-messaging
       service-plan: dev
+  # ------------------------------------------------------------
+  - name: pocReceiver-logs
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite
+  # ------------------------------------------------------------
   - name: pocReceiver-auth
     type: org.cloudfoundry.managed-service
     parameters:
