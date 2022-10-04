@@ -1,5 +1,5 @@
 using {saveapi as my} from '../db/schema';
-using { API_BUSINESS_PARTNER as external } from './external/API_BUSINESS_PARTNER.csn';
+using { ZAPI_BUSINESS_PARTNER as external } from './external/ZAPI_BUSINESS_PARTNER.csn';
 
 @requires: 'authenticated-user'
 service ReceiverService {

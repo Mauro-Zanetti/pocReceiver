@@ -28,6 +28,8 @@ modules:
       - name: poc_mesh
       - name: pocReceiver-auth
       - name: pocReceiver-logs
+      - name: pocReceiver-dest
+      - name: pocReceiver-connectivity
 
   - name: pocReceiver-db-deployer
     type: hdb
@@ -82,3 +84,16 @@ resources:
       config:
         xsappname: pocReceiver-${org}-${space}
         tenant-mode: dedicated
+  # ------------------------------------------------------------
+  - name: pocReceiver-dest
+    parameters:
+      service-plan: lite
+      service: destination
+      service-name: pocReceiver-dest
+    type: org.cloudfoundry.managed-service
+
+  - name: pocReceiver-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite

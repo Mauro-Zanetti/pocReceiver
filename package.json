@@ -21,7 +21,9 @@
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "deploy": "mbt build && cf deploy mta_archives/pocReceiver_1.0.0.mtar",
+    "undeploy": "cf undeploy pocReceiver --delete-services --delete-service-keys -f"
   },
   "engines": {
     "node": "^16.15"
@@ -62,19 +64,22 @@
       "messaging": {
         "kind": "enterprise-messaging-shared"
       },
-      "API_BUSINESS_PARTNER": {
-        "kind": "odata-v2",
-        "model": "srv/external/API_BUSINESS_PARTNER",
-        "credentials": {
-          "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER/"
-        }
-      },
       "[production]": {
         "auth": {
           "kind": "xsuaa"
         },
         "approuter": {
           "kind": "cloudfoundry"
+        }
+      },
+      "ZAPI_BUSINESS_PARTNER": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZAPI_BUSINESS_PARTNER",
+        "[production]": {
+          "credentials": {
+            "destination": "RZC100",
+            "path": "/sap/opu/odata/sap/API_BUSINESS_PARTNER"
+          }
         }
       }
     }
