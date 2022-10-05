@@ -68,6 +68,7 @@ resources:
     parameters:
       service: enterprise-messaging
       service-plan: dev
+      path: ./mesh.json
   # ------------------------------------------------------------
   - name: pocReceiver-logs
     type: org.cloudfoundry.managed-service
@@ -91,7 +92,7 @@ resources:
       service: destination
       service-name: pocReceiver-dest
     type: org.cloudfoundry.managed-service
-
+  # ------------------------------------------------------------
   - name: pocReceiver-connectivity
     type: org.cloudfoundry.managed-service
     parameters:
